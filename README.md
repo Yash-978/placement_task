@@ -1,16 +1,18 @@
 # placement_task
 
 A new Flutter project.
+<div> 
+    <img src = "https://github.com/user-attachments/assets/593eb311-98db-4612-a8db-ea249cfca14c"  height=35% width=25%  />
+    <img src = "https://github.com/user-attachments/assets/d489ed42-031d-448d-a1e4-052611b18d5f"  height=35% width=25%  />
+    <img src = "https://github.com/user-attachments/assets/b77ba958-1d2b-4b17-bca5-bfb847ec8929"  height=35% width=25%  />
+    <img src = "https://github.com/user-attachments/assets/5c411e22-25a0-422c-8cb1-9ef5964c6ef1"  height=35% width=25%  />
+   
+<div align = "center">
+<video src= "https://github.com/user-attachments/assets/fdf1a70d-1ae5-4155-9d70-18afd70a26ed" width=35%
+height=22% >
+</div>
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
