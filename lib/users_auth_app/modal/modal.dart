@@ -1,31 +1,39 @@
 import 'dart:convert';
 
-class UserModal {
-  List<User> users;
-  int total;
-  int skip;
-  int limit;
+class UserModel {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String phone;
 
-  UserModal({
-    required this.users,
-    required this.total,
-    required this.skip,
-    required this.limit,
+  UserModel({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
   });
 
-  factory UserModal.fromMap(Map<String, dynamic> json) => UserModal(
-    users: List<User>.from(json["users"].map((x) => User.fromMap(x))),
-    total: json["total"],
-    skip: json["skip"],
-    limit: json["limit"],
-  );
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+      phone: json['phone'],
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-    "users": List<dynamic>.from(users.map((x) => x.toMap())),
-    "total": total,
-    "skip": skip,
-    "limit": limit,
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'phone': phone,
+    };
+  }
 }
 
 class User {
