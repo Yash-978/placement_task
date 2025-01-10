@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:path/path.dart';
+import 'package:placement_task/user_app/modal/modal.dart';
+import 'package:placement_task/user_app/view/screens/home.dart';
 
 import 'package:placement_task/users_auth_app/global.dart';
 
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+import 'package:sqflite/sqflite.dart';
 
 int index = 0;
 List<Map<String, dynamic>> userList = [];
@@ -159,7 +165,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-
+      getPages: [
+        GetPage(
+          name: '/',
+          page: () => UserHomePage(),
+          // page: () => HomePage(),
+        ),
+      ],
     );
   }
 }
