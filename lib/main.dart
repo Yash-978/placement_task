@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:placement_task/user_app/controller/controller.dart';
 import 'package:placement_task/user_app/modal/modal.dart';
 import 'package:placement_task/user_app/view/screens/home.dart';
 
 import 'package:placement_task/users_auth_app/global.dart';
+import 'package:provider/provider.dart';
 
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:typed_data';
+
 import 'package:http/http.dart' as http;
-import 'package:sqflite/sqflite.dart';
+
 
 int index = 0;
 List<Map<String, dynamic>> userList = [];
@@ -154,8 +156,44 @@ class StorageHelper {
 //   );
 // }
 
-void main() {
-  runApp(MyApp());
+
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       getPages: [
+//         GetPage(
+//           name: '/',
+//           page: () => UserHomePage(),
+//           // page: () => HomePage(),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+
+bool isDark = false;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  sharedPreferences.getBool('isDarkTheme') ?? false;
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UsersProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -163,15 +201,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      getPages: [
-        GetPage(
-          name: '/',
-          page: () => UserHomePage(),
-          // page: () => HomePage(),
-        ),
-      ],
+      title: 'User Manager',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home:  const UserHomePage(),
     );
   }
 }
+

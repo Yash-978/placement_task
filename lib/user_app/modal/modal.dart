@@ -1,19 +1,14 @@
-import 'dart:convert';
-
-import 'dart:typed_data';
-
-class CustomerModal {
+class UsersModal {
   int id;
   String email;
   String password;
   String name;
   Role role;
   String avatar;
-  Uint8List? imageBlob; // Local image data
   DateTime creationAt;
   DateTime updatedAt;
 
-  CustomerModal({
+  UsersModal({
     required this.id,
     required this.email,
     required this.password,
@@ -22,55 +17,38 @@ class CustomerModal {
     required this.avatar,
     required this.creationAt,
     required this.updatedAt,
-    this.imageBlob,
   });
 
-  // Factory constructor to create an object from API response JSON
-  factory CustomerModal.fromMap(Map<String, dynamic> json) => CustomerModal(
+  factory UsersModal.fromJson(Map<String, dynamic> json) => UsersModal(
     id: json["id"],
     email: json["email"],
     password: json["password"],
     name: json["name"],
-    role: roleValues.map[json["role"]] ?? Role.CUSTOMER,
+    role: roleValues.map[json["role"]]!,
     avatar: json["avatar"],
     creationAt: DateTime.parse(json["creationAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
-    imageBlob: null, // This will be handled separately for offline storage
   );
 
-  // Convert the object to a map for SQLite storage
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
     "id": id,
     "email": email,
     "password": password,
     "name": name,
     "role": roleValues.reverse[role],
     "avatar": avatar,
-    "imageBlob": imageBlob, // Stored as BLOB
     "creationAt": creationAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
   };
-
-  // Convert an SQLite map to a CustomerModal object
-  factory CustomerModal.fromDatabase(Map<String, dynamic> dbMap) => CustomerModal(
-    id: dbMap["id"],
-    email: dbMap["email"],
-    password: dbMap["password"],
-    name: dbMap["name"],
-    role: roleValues.map[dbMap["role"]] ?? Role.CUSTOMER,
-    avatar: dbMap["avatar"],
-    imageBlob: dbMap["imageBlob"],
-    creationAt: DateTime.parse(dbMap["creationAt"]),
-    updatedAt: DateTime.parse(dbMap["updatedAt"]),
-  );
 }
 
 enum Role { ADMIN, CUSTOMER }
 
-// Enum helper for string-to-enum mapping
+final roleValues = EnumValues({"admin": Role.ADMIN, "customer": Role.CUSTOMER});
+
 class EnumValues<T> {
-  final Map<String, T> map;
-  late final Map<T, String> reverseMap;
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
 
   EnumValues(this.map);
 
@@ -80,9 +58,46 @@ class EnumValues<T> {
   }
 }
 
-// Mapping Role to Strings
-final roleValues = EnumValues({
-  "admin": Role.ADMIN,
-  "customer": Role.CUSTOMER,
-});
+class DatabaseUsers {
+  int id;
+  String email;
+  String name;
+  String role;
+  String avatar;
+  String creationAt;
+  String updatedAt;
 
+  DatabaseUsers({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.role,
+    required this.avatar,
+    required this.creationAt,
+    required this.updatedAt,
+  });
+
+  factory DatabaseUsers.fromMap(Map m1) {
+    return DatabaseUsers(
+      id: m1['id'],
+      email: m1['email'],
+      name: m1['name'],
+      role: m1['role'],
+      avatar: m1['avatar'],
+      creationAt: m1['creationAt'],
+      updatedAt: m1['updatedAt'],
+    );
+  }
+}
+
+Map<String, dynamic> toMap(DatabaseUsers m1) {
+  return {
+    'id': m1.id,
+    'email': m1.email,
+    'name': m1.name,
+    'role': m1.role,
+    'avatar': m1.avatar,
+    'creationAt': m1.creationAt,
+    'updatedAt': m1.updatedAt,
+  };
+}
